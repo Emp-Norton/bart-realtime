@@ -60,17 +60,11 @@ class App extends React.Component {
       }
     }
     this.selectChange = this.selectChange.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.state.selectorValue) {
-
-    }
-    //this.getData();
+    this.handleClick = this.handleClick.bind(this);
   }
 
   getData(origin) {
-    origin = this.state.stations[origin] || 'powl';
+    origin = this.state.stations[origin];
     let app = this;   
     $.ajax({
       type: 'GET',
@@ -91,6 +85,12 @@ class App extends React.Component {
     
   }
 
+  handleClick(e) {
+    let quickSelectStation = e.target.id;
+    this.state.selectorValue = quickSelectStation;
+    this.getData(quickSelectStation);
+  }
+
   render() {
     let app = this;
     let stationNames = Object.keys(this.state.stations);
@@ -103,8 +103,8 @@ class App extends React.Component {
             <img src="/images/bart-system-map.png"/>
           </div>
           <div className="button-container">
-            <button className="originStation"> Powell </button>
-            <button className="originStation"> Hayward </button>
+            <button className="originStation" id="Powell St. (SF)" onClick={this.handleClick}> Powell </button>
+            <button className="originStation" id="Hayward" onClick={this.handleClick}> Hayward </button>
             <br/>
             <select className="stationSelector" value={this.state.selectorValue} onChange={this.selectChange}>
               { stationNames.map(function(station){
@@ -121,7 +121,7 @@ class App extends React.Component {
             </div>
             :
             <div>
-            <h1> Please wait for train data </h1>
+            <h1> Please select a station for departure data </h1>
             </div>
           } 
         </div>
