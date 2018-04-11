@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DepartureList from './components/DepartureList.jsx';
 import $ from 'jquery';
 
 
@@ -7,20 +8,70 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      origin: undefined
+      selectorValue: "Please select a station",
+      origin: undefined,
+      stations: {
+        "12th St. Oakland City Center": "12th",
+        "16th St. Mission (SF)": "16th",
+        "19th St. Oakland": "19th",
+        "24th St. Mission (SF)": "24th",
+        "Ashby (Berkeley)": "ashb",
+        "Balboa Park (SF)": "balb",
+        "Bay Fair (San Leandro)": "bayf",
+        "Castro Valley": "cast",
+        "Civic Center (SF)": "civc",
+        "Coliseum": "cols",
+        "Colma": "colm",
+        "Concord": "conc",
+        "Daly City": "daly",
+        "Downtown Berkeley": "dbrk",
+        "Dublin/Pleasanton": "dubl",
+        "El Cerrito del Norte": "deln",
+        "El Cerrito Plaza": "plza",
+        "Embarcadero (SF)": "embr",
+        "Fremont": "frmt",
+        "Fruitvale (Oakland)": "ftvl",
+        "Glen Park (SF)": "glen",
+        "Hayward": "hayw",
+        "Lafayette": "lafy",
+        "Lake Merritt (Oakland)": "lake",
+        "MacArthur (Oakland)": "mcar",
+        "Millbrae": "mlbr",
+        "Montgomery St. (SF)": "mont",
+        "North Berkeley": "nbrk",
+        "North Concord/Martinez": "ncon",
+        "Oakland Int'l Airport": "oakl",
+        "Orinda": "orin",
+        "Pittsburg/Bay Point": "pitt",
+        "Pleasant Hill": "phil",
+        "Powell St. (SF)": "powl",
+        "Richmond": "rich",
+        "Rockridge (Oakland)": "rock",
+        "San Bruno": "sbrn",
+        "San Francisco Int'l Airport": "sfia",
+        "San Leandro": "sanl",
+        "South Hayward": "shay",
+        "South San Francisco": "ssan",
+        "Union City": "ucty",
+        "Warm Springs/South Fremont": "warm",
+        "Walnut Creek": "wcrk",
+        "West Dublin": "wdub",
+        "West Oakland": "woak"
+      }
     }
+    this.selectChange = this.selectChange.bind(this);
   }
 
   componentDidMount() {
     this.getData();
   }
 
-  getData(origin, dest) {
+  getData(origin) {
     origin = origin || 'powl';
     let app = this;   
     $.ajax({
       type: 'GET',
-      url: '/api',
+      url: `/api/${origin}`, // need to pass different station here in order to get different data
       success: function(data) {
         app.setState({departureData: data})
       }, 
@@ -30,33 +81,48 @@ class App extends React.Component {
     })
   }
 
+  selectChange(e) {
+    let newValue = e.target.value;
+    this.state.selectorValue = newValue;
+    console.log(newValue);
+    this.getData(newValue);
+    
+  }
+
   render() {
+    let app = this;
+    let stationNames = Object.keys(this.state.stations);
     return (
       <div>
-        <div className="panel">
-          <h1>Bart Train Finder</h1>
-          <div className="map-panel">
-          <img src="/images/bart-system-map.png"/>
+        <div className="contentContainer">
+          <div className="panel">
+            <h1>Bart Train Finder</h1>
+            <div className="map-panel">
+            <img src="/images/bart-system-map.png"/>
+          </div>
+          <div className="button-container">
+            <button className="originStation"> Powell </button>
+            <button className="originStation"> Hayward </button>
+            <br/>
+            <select value={this.state.selectorValue} onChange={this.selectChange}>
+              { stationNames.map(function(station){
+                  return (<option> {station}</option>)
+                })
+              }
+            </select>
+          </div>
         </div>
-        <div className="button-container">
-          <button className="originStation"> Powell </button>
-          <button className="originStation"> Hayward </button>
+        { this.state.departureData ?
+            <div className="results">
+              <DepartureList departures={this.state.departureData.root.station[0].etd}/>
+                
+            </div>
+            :
+            <div>
+            <h1> Please wait for train data </h1>
+            </div>
+          } 
         </div>
-      </div>
-      { !this.state.departureData ? null
-      :
-        <div class="results">
-          {this.state.departureData.root.station[0].etd.map(function(departure) {
-            let colorToUse = departure.estimate[0].color;
-            if (colorToUse === "YELLOW") colorToUse = '#FF8C00'
-            let styles = {"color": colorToUse}
-            return (<p style={styles}><b> 
-              {departure.destination} - {departure.estimate[0].minutes} minutes
-              </b></p>)
-            }
-          )}
-        </div>
-      } 
       </div>
     );
   }

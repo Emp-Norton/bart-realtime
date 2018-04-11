@@ -16,7 +16,8 @@ app.get('/', (req, res) => {
 	res.send('ok');
 });
 
-app.get('/api', (req, response) => {
+app.get('/api/:station', (req, response) => {
+	console.log(req.params.station)
 	 let url = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=powl&key=MW9S-E7SL-26DU-VV8V&json=y`;
 	 request.get(url, res => {
 	 	let body = '';
@@ -25,7 +26,6 @@ app.get('/api', (req, response) => {
 	 	})
 	 	res.on('end', () => {
 	 		body = JSON.parse(body);
-	 		console.log(body)
 	 		response.send(body);
 	 	})
 	 })
