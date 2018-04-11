@@ -17,7 +17,7 @@ export default class DepatureList extends React.Component {
 			<div>
 			{ this.state.trains ?
 				<div>
-					<h1>Departures from station</h1>
+					<h1>Departures from {this.props.station}</h1>
 						{this.props.departures.map(function(train) {
 							return (
 									<p>Towards { train.destination } in { train.estimate[0].minutes} minutes </p>

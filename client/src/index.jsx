@@ -63,6 +63,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    if (this.state.selectorValue) {
+
+    }
     this.getData();
   }
 
@@ -113,7 +116,7 @@ class App extends React.Component {
         </div>
         { this.state.departureData ?
             <div className="results">
-              <DepartureList departures={this.state.departureData.root.station[0].etd}/>
+              <DepartureList station={this.state.departureData.root.station[0].name} departures={this.state.departureData.root.station[0].etd}/>
                 
             </div>
             :
