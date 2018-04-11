@@ -66,7 +66,7 @@ class App extends React.Component {
     if (this.state.selectorValue) {
 
     }
-    this.getData();
+    //this.getData();
   }
 
   getData(origin) {
@@ -106,7 +106,7 @@ class App extends React.Component {
             <button className="originStation"> Powell </button>
             <button className="originStation"> Hayward </button>
             <br/>
-            <select value={this.state.selectorValue} onChange={this.selectChange}>
+            <select className="stationSelector" value={this.state.selectorValue} onChange={this.selectChange}>
               { stationNames.map(function(station){
                   return (<option> {station}</option>)
                 })
