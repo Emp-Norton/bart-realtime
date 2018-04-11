@@ -18,6 +18,10 @@ p {
   display: flex;
 }
 
+.etdMinutes {
+  text-decoration: underline;
+}
+
 .map-panel {
   width: 100%;
 }

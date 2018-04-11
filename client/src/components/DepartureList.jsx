@@ -9,11 +9,9 @@ const DepartureList = (props) => {
 					<h1>Departures from {props.station}</h1>
 						{props.departures.map(function(train) {
 							return (
-									<p>Towards { train.destination } in { train.estimate[0].minutes} minutes </p>
+									<Departure train={train} />
 								)
 						})}
-				</div>
-				<div>
 				</div>
 			</div>
 		)
