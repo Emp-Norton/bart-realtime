@@ -21,7 +21,6 @@ class App extends React.Component {
       type: 'GET',
       url: '/api',
       success: function(data) {
-        console.log('blah')
         app.setState({departureData: data})
       }, 
       failure: function(err) {
