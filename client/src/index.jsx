@@ -17,7 +17,7 @@ class App extends React.Component {
   getData(origin, dest) {
     origin = origin || 'powl';
     let app = this;
-    let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${origin}&key=MW9S-E7SL-26DU-VV8V&json=y`;
+    let url = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${origin}&key=MW9S-E7SL-26DU-VV8V&json=y`;
     $.ajax({
       type: 'GET',
       url: url,
