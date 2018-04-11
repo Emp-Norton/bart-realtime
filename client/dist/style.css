@@ -90,6 +90,10 @@ p {
   height: 450px;
 }
 
+.originStation {
+  width: 80px;
+  height: 50px;
+}
 .orange-line {
   background-color: #ff9933;
 }
