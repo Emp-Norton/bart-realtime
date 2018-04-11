@@ -9,7 +9,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       selectorValue: "Please select a station",
-      origin: undefined,
       stations: {
         "12th St. Oakland City Center": "12th",
         "16th St. Mission (SF)": "16th",
@@ -63,6 +62,10 @@ class App extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    this.determineUserAgent();
+  }
+
   getData(origin) {
     origin = this.state.stations[origin];
     let app = this;   
@@ -89,6 +92,11 @@ class App extends React.Component {
     let quickSelectStation = e.target.id;
     this.state.selectorValue = quickSelectStation;
     this.getData(quickSelectStation);
+  }
+
+  determineUserAgent() {
+    let device = navigator.userAgent;
+    alert(device);
   }
 
   render() {
