@@ -67,11 +67,11 @@ class App extends React.Component {
   }
 
   getData(origin) {
-    origin = origin || 'powl';
+    origin = this.state.stations[origin] || 'powl';
     let app = this;   
     $.ajax({
       type: 'GET',
-      url: `/api/${origin}`, // need to pass different station here in order to get different data
+      url: `/api/${origin}`, 
       success: function(data) {
         app.setState({departureData: data})
       }, 
@@ -84,7 +84,6 @@ class App extends React.Component {
   selectChange(e) {
     let newValue = e.target.value;
     this.state.selectorValue = newValue;
-    console.log(newValue);
     this.getData(newValue);
     
   }

@@ -17,8 +17,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/:station', (req, response) => {
-	console.log(req.params.station)
-	 let url = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=powl&key=MW9S-E7SL-26DU-VV8V&json=y`;
+	 let station = req.params.station;
+	 let url = `https://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=MW9S-E7SL-26DU-VV8V&json=y`;
+	 console.log(url)
 	 request.get(url, res => {
 	 	let body = '';
 	 	res.on('data', data => {
