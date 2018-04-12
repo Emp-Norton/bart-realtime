@@ -63,7 +63,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.determineUserAgent();
+    this.state.userDetails = this.determineUserAgent();
+    alert(this.state.userDetails.viewportwidth, this.state.userDetails.viewportheight)
   }
 
   getData(origin) {
@@ -95,8 +96,13 @@ class App extends React.Component {
   }
 
   determineUserAgent() {
-    let device = navigator.userAgent;
-    alert(device);
+    let userProps = {
+      device: navigator.userAgent,
+      viewportwidth: window.innerWidth,
+      viewportheight: window.innerHeight
+    }
+
+    return userProps
   }
 
   render() {
