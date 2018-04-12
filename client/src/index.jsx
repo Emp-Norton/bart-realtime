@@ -64,7 +64,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.state.userDetails = this.determineUserAgent();
-    alert(this.state.userDetails.viewportwidth, this.state.userDetails.viewportheight)
+    alert(`width ${this.state.userDetails.viewportwidth} height ${this.state.userDetails.viewportheight}`)
   }
 
   getData(origin) {
