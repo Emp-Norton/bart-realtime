@@ -130,9 +130,7 @@ class App extends React.Component {
     let stationNames = Object.keys(this.state.stations);
     return (
       <div>
-    { this.state.isMobile ?
-        <MobilePage getData={this.getData} stations={this.state.stations}/>
-      :
+ 
       <div>
         <div className="contentContainer">
           <div className="panel">
@@ -176,7 +174,7 @@ class App extends React.Component {
 
         </div>
       </div>
-    }
+    
     </div>
     );
   }
