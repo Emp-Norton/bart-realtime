@@ -18,8 +18,14 @@ module.exports = {
 				loader: 'babel-loader',
 				query: {
 					presets: ['react', 'es2015']
-				}
+				},
+			},
+			{
+				test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+        loader: 'file-loader' 
 			}
 		]
 	}
 }
+
+

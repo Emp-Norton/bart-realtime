@@ -5,8 +5,8 @@ const DepartureList = (props) => {
 
 		return (
 			<div>
-				<div>
-					<h1>Departures from {props.station}</h1>
+				<div className="departuresContainer">
+					<h1>Departures from {props.station} </h1>
 						{props.departures.map(function(train) {
 							return (
 									<Departure train={train} />

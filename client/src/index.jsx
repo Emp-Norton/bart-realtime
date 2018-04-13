@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DepartureList from './components/DepartureList.jsx';
+import MobilePage from './components/MobilePage.jsx';
+import Modal from 'react-responsive-modal';
+import map from '../dist/images/bart-system-map.png'
 import $ from 'jquery';
 
 
@@ -8,6 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalOpen: false,
       selectorValue: "Please select a station",
       stations: {
         "12th St. Oakland City Center": "12th",
@@ -64,6 +68,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.state.userDetails = this.determineUserAgent();
+    if (this.state.userDetails.device.split(' ').includes('Android')) {
+      this.setState({isMobile: true})
+    }
   }
 
   getData(origin) {
@@ -104,20 +111,36 @@ class App extends React.Component {
     return userProps
   }
 
+  onOpenModal() {
+    this.setState({
+      modalOpen: true
+    });
+  }
+
+  onCloseModal() {
+    this.setState({
+      modalOpen: false
+    });
+  }
+
+
   render() {
+    const {modalOpen} = this.state;
     let app = this;
     let stationNames = Object.keys(this.state.stations);
     return (
       <div>
+    { this.state.isMobile ?
+        <MobilePage getData={this.getData} stations={this.state.stations}/>
+      :
+      <div>
         <div className="contentContainer">
           <div className="panel">
             <h1>Bart Train Finder</h1>
-            <div className="map-panel">
-            <img src="/images/bart-system-map.png"/>
-          </div>
+       
           <div className="button-container">
-            <button className="originStation" id="Powell St. (SF)" onClick={this.handleClick}> Powell </button>
-            <button className="originStation" id="Hayward" onClick={this.handleClick}> Hayward </button>
+            <button className="largeButton" id="Powell St. (SF)" onClick={this.handleClick}> Powell </button>
+            <button className="largeButton" id="Hayward" onClick={this.handleClick}> Hayward </button>
             <br/>
             <select className="stationSelector" value={this.state.selectorValue} onChange={this.selectChange}>
               { stationNames.map(function(station){
@@ -125,20 +148,36 @@ class App extends React.Component {
                 })
               }
             </select>
+            <button className="largeButton" id="showMap" onClick={this.onOpenModal.bind(this)}> Show Map </button>
+            <Modal open={modalOpen} onClose={this.onCloseModal.bind(this)} little>
+              <img className="modalImage" src={map} />
+            </Modal>
+    
           </div>
         </div>
+
+
         { this.state.departureData ?
+
+
             <div className="results">
               <DepartureList station={this.state.departureData.root.station[0].name} departures={this.state.departureData.root.station[0].etd}/>
                 
             </div>
+
             :
+
+
             <div>
-            <h1> Please select a station for departure data </h1>
+              <h1> Please select a station for departure data </h1>
             </div>
           } 
+
+
         </div>
       </div>
+    }
+    </div>
     );
   }
 }
