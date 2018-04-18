@@ -6,11 +6,13 @@ html, body {
   background: #FEFEFE;
   display: flex;
   text-align: center;
+  background-image: radial-gradient(at top left, white, lightblue, grey);
 }
 
 p {
   margin: 0;
   padding: 0;
+  font-size: 2em;
 }
 
 h1 {
@@ -22,9 +24,12 @@ h1 {
 }
 
 .departuresContainer {
+  background-color: white;
+  opacity: 0.7;
   margin: 5%;
+  padding: 5%;
   border-radius: 0px 25px 0px 25px;
-  border: 1px solid black;
+  border: 1px black;
 }
 
 .etdMinutes {
@@ -57,9 +62,20 @@ h1 {
   margin-top: 25px;
 }
 
+.section {
+  height: 500px;
+  background-color: red;
+  border: 2px solid white;
+}
+
 .stationSelector {
   height: 50px;
   width: 80%;
   font-size: xx-large;
   text-align-last: center;
+}
+
+.trainImage {
+  height: 200px;
+  width: 200px;
 }

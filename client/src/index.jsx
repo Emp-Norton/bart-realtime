@@ -4,6 +4,7 @@ import DepartureList from './components/DepartureList.jsx';
 import MobilePage from './components/MobilePage.jsx';
 import Modal from 'react-responsive-modal';
 import map from '../dist/images/bart-system-map.png'
+import train from '../dist/images/train.png'
 import $ from 'jquery';
 
 
@@ -134,6 +135,7 @@ class App extends React.Component {
       <div>
         <div className="contentContainer">
           <div className="panel">
+          <img className="trainImage" src={train} />
             <h1>Bart Train Finder</h1>
        
           <div className="button-container">
@@ -159,8 +161,9 @@ class App extends React.Component {
 
 
             <div className="results">
+        
               <DepartureList station={this.state.departureData.root.station[0].name} departures={this.state.departureData.root.station[0].etd}/>
-                
+  
             </div>
 
             :
@@ -181,5 +184,17 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+/*
+  TODO: 
+    - mobile reponsiveness
+    - cross-browser compat
+    - redesign UI
+    - make it pretty
+    - dynamic "favorite station" selection
+    - user profiles
+*/
+
+
 
   
